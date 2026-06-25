@@ -1,0 +1,1024 @@
+{
+  "examTitle": "AICA L2 예시 문항 전체",
+  "description": "공식 샘플 14문항 + 연습 뱅크 18문항 + 코드 템플릿 20종 + 시험 팁 (총 66문항)",
+  "sources": {
+    "공식 샘플문항": 20,
+    "연습 문항 뱅크": 18,
+    "코드 템플릿": 20,
+    "시험 팁": 8
+  },
+  "questions": [
+    {
+      "id": "s01",
+      "type": "mcq",
+      "choices": 5,
+      "category": "공식 샘플문항",
+      "question": "[샘플 1번] scikit-learn 패키지를 import 하는 코드는?",
+      "options": [
+        "import sklearn as sk",
+        "import scikit-learn",
+        "from sklearn import *",
+        "pip install sklearn",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "샘플 1번: sklearn import"
+    },
+    {
+      "id": "s02",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 2번] pandas 패키지를 import 하는 코드는?",
+      "options": [
+        "import pandas as pd",
+        "import pandas",
+        "from pd import pandas",
+        "import pd"
+      ],
+      "correct": 0,
+      "explanation": "샘플 2번: pandas import"
+    },
+    {
+      "id": "s03",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 3번] JSON 파일 'A0007IT.json'을 읽어 df에 저장하는 코드는?",
+      "options": [
+        "df = pd.read_json('A0007IT.json')",
+        "df = pd.read_csv('A0007IT.json')",
+        "df = json.load('A0007IT.json')",
+        "df = pd.open_json('A0007IT.json')"
+      ],
+      "correct": 0,
+      "explanation": "샘플 3번: read_json, 변수명 df"
+    },
+    {
+      "id": "s04",
+      "type": "mcq",
+      "choices": 5,
+      "category": "공식 샘플문항",
+      "question": "[샘플 4번] Address1 countplot 후 '-' 지역 행을 삭제하는 처리는?",
+      "options": [
+        "df = df[df['Address1'] != '-']",
+        "df.drop('Address1')",
+        "df = df.dropna('Address1')",
+        "df['Address1'] = '-'",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "countplot: sns.countplot(data=df, x='Address1') 후 필터링"
+    },
+    {
+      "id": "s05",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 4번] Address1 분포를 보여주는 seaborn 그래프는?",
+      "options": [
+        "sns.countplot(data=df, x='Address1')",
+        "sns.heatmap(df)",
+        "plt.pie(df['Address1'])",
+        "sns.jointplot(x='Address1')"
+      ],
+      "correct": 0,
+      "explanation": "countplot으로 범주 분포 시각화"
+    },
+    {
+      "id": "s06",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 5번] Time_Driving과 Speed_Per_Hour jointplot 코드는?",
+      "options": [
+        "sns.jointplot(data=df, x='Time_Driving', y='Speed_Per_Hour')",
+        "sns.countplot(x='Time_Driving', y='Speed_Per_Hour')",
+        "plt.scatter('Time_Driving', 'Speed_Per_Hour')",
+        "sns.heatmap(Time_Driving, Speed_Per_Hour)"
+      ],
+      "correct": 0,
+      "explanation": "X=실주행시간, Y=평균시속"
+    },
+    {
+      "id": "s07",
+      "type": "mcq",
+      "choices": 5,
+      "category": "공식 샘플문항",
+      "question": "[샘플 6번] 시속 300 이상 이상치 행 삭제 후 df_temp에 저장하는 코드는?",
+      "options": [
+        "df_temp = df[df['Speed_Per_Hour'] < 300]",
+        "df_temp = df.drop('Speed_Per_Hour')",
+        "df_temp = df[df['Speed_Per_Hour'] > 300]",
+        "df_temp = df.dropna()",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "jointplot에서 이상치 확인 후 조건 필터링"
+    },
+    {
+      "id": "s08",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 7번] df_temp 결측치 확인 후 행 삭제 → df_na 저장은?",
+      "options": [
+        "df_na = df_temp.dropna(axis=0)",
+        "df_na = df_temp.fillna(0)",
+        "df_na = df_temp.drop(axis=0)",
+        "df_na = df_temp.isna()"
+      ],
+      "correct": 0,
+      "explanation": "isna().sum() 확인 후 dropna(axis=0)"
+    },
+    {
+      "id": "s09",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 8번] Time_Departure, Time_Arrival 컬럼 삭제 → df_del은?",
+      "options": [
+        "df_del = df_na.drop(['Time_Departure','Time_Arrival'], axis=1)",
+        "df_del = df_na.drop(['Time_Departure','Time_Arrival'])",
+        "df_del = df_na.drop(axis=0)",
+        "df_del = df_na.dropna()"
+      ],
+      "correct": 0,
+      "explanation": "컬럼 삭제는 axis=1"
+    },
+    {
+      "id": "s10",
+      "type": "mcq",
+      "choices": 5,
+      "category": "공식 샘플문항",
+      "question": "[샘플 9번] object 타입 전체 원-핫 인코딩 → df_preset은?",
+      "options": [
+        "cols = df_del.select_dtypes('object').columns; df_preset = pd.get_dummies(data=df_del, columns=cols)",
+        "df_preset = pd.get_dummies(df_del)",
+        "df_preset = LabelEncoder(df_del)",
+        "df_preset = df_del.encode()",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "select_dtypes('object') → get_dummies"
+    },
+    {
+      "id": "s11",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 10번] Time_Driving 예측용 train_test_split (80:20, random_state=42)은?",
+      "options": [
+        "x=df_preset.drop('Time_Driving',axis=1); y=df_preset['Time_Driving']; train_test_split(x,y,test_size=0.2,random_state=42)",
+        "train_test_split(df_preset, test_size=0.2)",
+        "train_test_split(Time_Driving, test_size=0.8)",
+        "train_test_split(x, y, train_size=0.2)"
+      ],
+      "correct": 0,
+      "explanation": "label=Time_Driving, test_size=0.2, random_state=42"
+    },
+    {
+      "id": "s12",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 11번] DecisionTreeRegressor(max_depth=5, min_samples_split=3, random_state=120) 학습은?",
+      "options": [
+        "dt = DecisionTreeRegressor(max_depth=5, min_samples_split=3, random_state=120); dt.fit(X_train, y_train)",
+        "dt = DecisionTreeRegressor(n_estimators=100); dt.fit(X_train)",
+        "dt = RandomForestRegressor(max_depth=5); dt.fit(X_train, y_train)",
+        "dt.fit(max_depth=5)"
+      ],
+      "correct": 0,
+      "explanation": "파라미터 값을 문제 지시와 동일하게"
+    },
+    {
+      "id": "s13",
+      "type": "mcq",
+      "choices": 5,
+      "category": "공식 샘플문항",
+      "question": "[샘플 12번] Decision tree MAE 평가 → dt_mae 저장은?",
+      "options": [
+        "y_pred=dt.predict(X_valid); dt_mae=mean_absolute_error(y_valid, y_pred)",
+        "dt_mae=dt.score(X_valid, y_valid)",
+        "dt_mae=accuracy_score(y_valid, y_pred)",
+        "dt_mae=dt.predict(X_valid)",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "predict 후 mean_absolute_error"
+    },
+    {
+      "id": "s14",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 13번] 회귀 DL: Dropout(0.2), loss=mse, epochs=30, batch_size=16 설정은?",
+      "options": [
+        "Dropout(0.2); compile(loss='mse'); fit(epochs=30, batch_size=16, validation_data=(X_valid,y_valid))",
+        "Dropout(0.5); loss='mae'; epochs=10",
+        "compile(loss='binary_crossentropy'); epochs=30",
+        "fit(batch_size=32, epochs=50)"
+      ],
+      "correct": 0,
+      "explanation": "회귀=MSE, Dropout 0.2, epochs 30, batch 16"
+    },
+    {
+      "id": "s15",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 14번] 학습/검증 MSE 그래프 (범례 mse, val_mse, 제목 Model MSE)는?",
+      "options": [
+        "plt.plot(history.history['mse']); plt.plot(history.history['val_mse']); plt.legend(['mse','val_mse']); plt.title('Model MSE')",
+        "plt.plot(history); plt.title('MSE')",
+        "sns.heatmap(history)",
+        "plt.plot(mse, val_mse)"
+      ],
+      "correct": 0,
+      "explanation": "history.history['mse'], ['val_mse'], 범례·타이틀·축 라벨 확인"
+    },
+    {
+      "id": "s16",
+      "type": "mcq",
+      "choices": 5,
+      "category": "공식 샘플문항",
+      "question": "[샘플 변형] 수치형 컬럼 상관계수 행렬을 구하는 코드는?",
+      "options": [
+        "df.corr()",
+        "df.correlate()",
+        "df.relation()",
+        "np.corr(df)",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "샘플 4번 변형: corr() 상관관계 분석"
+    },
+    {
+      "id": "s17",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 변형] RobustScaler로 스케일링하는 import는?",
+      "options": [
+        "from sklearn.preprocessing import RobustScaler",
+        "from sklearn.preprocessing import MinMaxScaler",
+        "from pandas import RobustScaler",
+        "from keras.preprocessing import RobustScaler"
+      ],
+      "correct": 0,
+      "explanation": "일부 샘플에서 train_test_split 후 RobustScaler 사용"
+    },
+    {
+      "id": "s18",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 변형] 회귀 MSE 성능 평가 함수는?",
+      "options": [
+        "mean_squared_error(y_valid, y_pred)",
+        "mean_absolute_error(y_valid, y_pred)",
+        "accuracy_score(y_valid, y_pred)",
+        "r2_score(y_train, y_pred)"
+      ],
+      "correct": 0,
+      "explanation": "MSE vs MAE — 문제 지시 확인"
+    },
+    {
+      "id": "s19",
+      "type": "mcq",
+      "choices": 5,
+      "category": "공식 샘플문항",
+      "question": "[샘플 변형] RandomForestRegressor로 학습하는 코드는?",
+      "options": [
+        "rf = RandomForestRegressor(); rf.fit(X_train, y_train)",
+        "rf = RandomForestClassifier(); rf.fit(X_train, y_train)",
+        "rf = DecisionTreeRegressor(); rf.fit(X_train)",
+        "RandomForestRegressor.predict(X_train)",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "Regressor=회귀, Classifier=분류"
+    },
+    {
+      "id": "s20",
+      "type": "mcq",
+      "choices": 4,
+      "category": "공식 샘플문항",
+      "question": "[샘플 변형] 결측치 개수 확인 코드는?",
+      "options": [
+        "df.isna().sum()",
+        "df.missing()",
+        "df.count_na()",
+        "df.dropna().sum()"
+      ],
+      "correct": 0,
+      "explanation": "isna().sum() 또는 isnull().sum()"
+    },
+    {
+      "id": "b01",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 1] numpy, pandas, matplotlib, seaborn import 별칭 조합은?",
+      "options": [
+        "np, pd, plt, sns",
+        "numpy, pandas, plot, sea",
+        "n, p, m, s",
+        "arr, df, fig, seaborn"
+      ],
+      "correct": 0,
+      "explanation": "import numpy as np, pandas as pd, matplotlib.pyplot as plt, seaborn as sns"
+    },
+    {
+      "id": "b02",
+      "type": "mcq",
+      "choices": 5,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 2] navigation_sample.json → df 저장은?",
+      "options": [
+        "df = pd.read_json('navigation_sample.json')",
+        "df = pd.read_csv('navigation_sample.json')",
+        "df = json.read('navigation_sample.json')",
+        "df = pd.load_json('navigation_sample.json')",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "경로·변수명은 문제 지시 따름"
+    },
+    {
+      "id": "b03",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 3] df.shape → ans01 저장은?",
+      "options": [
+        "ans01 = df.shape",
+        "ans01 = df.size",
+        "ans01 = df.shape()",
+        "ans01 = len(df)"
+      ],
+      "correct": 0,
+      "explanation": "shape는 (행, 열) 튜플"
+    },
+    {
+      "id": "b04",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 4] 컬럼별 결측치 → ans02는?",
+      "options": [
+        "ans02 = df.isna().sum()",
+        "ans02 = df.dropna()",
+        "ans02 = df.isnull()",
+        "ans02 = df.count()"
+      ],
+      "correct": 0,
+      "explanation": "isna().sum()"
+    },
+    {
+      "id": "b05",
+      "type": "mcq",
+      "choices": 5,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 5] 수치형 상관계수 → corr_matrix는?",
+      "options": [
+        "corr_matrix = df.select_dtypes(include='number').corr()",
+        "corr_matrix = df.corr().all()",
+        "corr_matrix = df.describe()",
+        "corr_matrix = np.correlate(df)",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "수치형 선택 후 corr()"
+    },
+    {
+      "id": "b06",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 6] Day_Type별 Time_Driving 평균 → df_grp는?",
+      "options": [
+        "df_grp = df.groupby('Day_Type')['Time_Driving'].mean()",
+        "df_grp = df.group('Day_Type').mean()",
+        "df_grp = df.pivot('Day_Type', 'Time_Driving')",
+        "df_grp = df.agg('Day_Type')"
+      ],
+      "correct": 0,
+      "explanation": "groupby().mean()"
+    },
+    {
+      "id": "b07",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 7] Speed≥300 행 제거 → df_temp는?",
+      "options": [
+        "df_temp = df[df['Speed'] < 300]",
+        "df_temp = df.drop('Speed')",
+        "df_temp = df[df['Speed'] >= 300]",
+        "df_temp = df.filter(Speed)"
+      ],
+      "correct": 0,
+      "explanation": "이상치 조건 필터링"
+    },
+    {
+      "id": "b08",
+      "type": "mcq",
+      "choices": 5,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 8] df_temp 결측 행 삭제 → df_na는?",
+      "options": [
+        "df_na = df_temp.dropna(axis=0)",
+        "df_na = df_temp.dropna(axis=1)",
+        "df_na = df_temp.fillna(0)",
+        "df_na = df_temp.remove_na()",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "dropna(axis=0)"
+    },
+    {
+      "id": "b09",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 9] Time_Departure, Time_Arrival 삭제 → df_del은?",
+      "options": [
+        "df_del = df_na.drop(['Time_Departure', 'Time_Arrival'], axis=1)",
+        "df_del = df_na.drop(['Time_Departure', 'Time_Arrival'])",
+        "df_del = df_na.drop(axis=0)",
+        "df_del = df_na.remove(columns=2)"
+      ],
+      "correct": 0,
+      "explanation": "axis=1 컬럼 삭제"
+    },
+    {
+      "id": "b10",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 10] object 원-핫 → df_preset은?",
+      "options": [
+        "cols=df_del.select_dtypes('object').columns; df_preset=pd.get_dummies(data=df_del, columns=cols)",
+        "df_preset=pd.get_dummies(df_del, drop_first=True)",
+        "df_preset=LabelEncoder(df_del)",
+        "df_preset=df_del.encode('object')"
+      ],
+      "correct": 0,
+      "explanation": "get_dummies + object 컬럼"
+    },
+    {
+      "id": "b11",
+      "type": "mcq",
+      "choices": 5,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 11] 수치형 상관 히트맵 seaborn 함수는?",
+      "options": [
+        "sns.heatmap(corr, annot=True)",
+        "sns.countplot(corr)",
+        "sns.jointplot(corr)",
+        "plt.heatmap(corr)",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "sns.heatmap(..., annot=True)"
+    },
+    {
+      "id": "b12",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 12] Time_Driving label, 80:20 split, random_state=42는?",
+      "options": [
+        "x=df_preset.drop('Time_Driving',axis=1); y=df_preset['Time_Driving']; train_test_split(x,y,test_size=0.2,random_state=42)",
+        "train_test_split(df_preset, 0.2, 42)",
+        "train_test_split(x, y, train_size=0.2)",
+        "split(df_preset, Time_Driving, 0.2)"
+      ],
+      "correct": 0,
+      "explanation": "train_test_split 표준 패턴"
+    },
+    {
+      "id": "b13",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 13] RandomForestRegressor(100, random_state=42) → pred_y는?",
+      "options": [
+        "model=RandomForestRegressor(n_estimators=100,random_state=42); model.fit(X_train,y_train); pred_y=model.predict(X_valid)",
+        "model=RandomForestClassifier(100); pred_y=model.fit()",
+        "pred_y=RandomForestRegressor.predict(X_valid)",
+        "model.fit(); pred_y=model.score()"
+      ],
+      "correct": 0,
+      "explanation": "fit → predict"
+    },
+    {
+      "id": "b14",
+      "type": "mcq",
+      "choices": 5,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 14] MAE → ans03는?",
+      "options": [
+        "ans03 = mean_absolute_error(y_valid, pred_y)",
+        "ans03 = accuracy_score(y_valid, pred_y)",
+        "ans03 = mae(y_valid, pred_y)",
+        "ans03 = mean_absolute_error(pred_y, y_valid)",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "sklearn.metrics.mean_absolute_error"
+    },
+    {
+      "id": "b15",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 15] 이진 분류 Sequential (sigmoid + binary_crossentropy)는?",
+      "options": [
+        "Dense(1,activation='sigmoid'); compile(loss='binary_crossentropy',metrics=['accuracy'])",
+        "Dense(1,activation='softmax'); compile(loss='mse')",
+        "Dense(10,activation='relu'); compile(loss='categorical')",
+        "compile(optimizer='sgd', loss='mae')"
+      ],
+      "correct": 0,
+      "explanation": "이진: sigmoid + binary_crossentropy"
+    },
+    {
+      "id": "b16",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 16] contract_type LabelEncoder는?",
+      "options": [
+        "le=LabelEncoder(); df['contract_type']=le.fit_transform(df['contract_type'])",
+        "df['contract_type']=get_dummies(df['contract_type'])",
+        "le=LabelEncoder(); le.transform(df)",
+        "LabelEncoder.fit(df['contract_type'])"
+      ],
+      "correct": 0,
+      "explanation": "fit_transform on column"
+    },
+    {
+      "id": "b17",
+      "type": "mcq",
+      "choices": 5,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 17] monthly_charges MinMaxScaler 0~1은?",
+      "options": [
+        "scaler=MinMaxScaler(); df['monthly_charges_scaled']=scaler.fit_transform(df[['monthly_charges']])",
+        "scaler=StandardScaler(); scaler.transform(df)",
+        "MinMaxScaler(df['monthly_charges'])",
+        "df.scale('monthly_charges')",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "fit_transform with double brackets for single column"
+    },
+    {
+      "id": "b18",
+      "type": "mcq",
+      "choices": 4,
+      "category": "연습 문항 뱅크",
+      "question": "[뱅크 18] RandomForestClassifier → ans04 accuracy는?",
+      "options": [
+        "clf=RandomForestClassifier(n_estimators=100,random_state=42); clf.fit(X_train,y_train); ans04=accuracy_score(y_valid, clf.predict(X_valid))",
+        "ans04=clf.accuracy()",
+        "ans04=accuracy_score(X_train, y_train)",
+        "clf=RandomForestRegressor(); ans04=clf.score()"
+      ],
+      "correct": 0,
+      "explanation": "Classifier + accuracy_score"
+    },
+    {
+      "id": "t01",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 기본 import 4종은?",
+      "options": [
+        "numpy as np, pandas as pd, pyplot as plt, seaborn as sns",
+        "numpy, pandas, matplotlib, seaborn (별칭 없음)",
+        "np, pd만 import",
+        "import all from sklearn"
+      ],
+      "correct": 0,
+      "explanation": "시험 1번 문항 패턴"
+    },
+    {
+      "id": "t02",
+      "type": "mcq",
+      "choices": 5,
+      "category": "코드 템플릿",
+      "question": "[템플릿] CSV/JSON 로딩은?",
+      "options": [
+        "pd.read_csv() / pd.read_json()",
+        "pd.load_csv() / pd.load_json()",
+        "open().read_csv()",
+        "csv.read() / json.read()",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "read_* 패턴"
+    },
+    {
+      "id": "t03",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 데이터 기본 확인 메서드에 없는 것은?",
+      "options": [
+        "df.head()",
+        "df.info()",
+        "df.describe()",
+        "df.compile()"
+      ],
+      "correct": 3,
+      "explanation": "head, info, describe, shape, columns, value_counts"
+    },
+    {
+      "id": "t04",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 결측치 확인 코드는?",
+      "options": [
+        "df.isna().sum()",
+        "df.missing_count()",
+        "df.null()",
+        "df.dropna().sum()"
+      ],
+      "correct": 0,
+      "explanation": "isna/isnull + sum"
+    },
+    {
+      "id": "t05",
+      "type": "mcq",
+      "choices": 5,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 상관분석 + 히트맵 조합은?",
+      "options": [
+        "corr=df.select_dtypes(include='number').corr(); sns.heatmap(corr,annot=True)",
+        "df.corr(); plt.plot()",
+        "sns.countplot(corr)",
+        "heatmap(df.all())",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "수치형 corr + heatmap"
+    },
+    {
+      "id": "t06",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] groupby 집계 예시는?",
+      "options": [
+        "df.groupby('컬럼')['타겟'].mean()",
+        "df.group('컬럼').sum()",
+        "df.aggregate(all)",
+        "groupby(df).plot()"
+      ],
+      "correct": 0,
+      "explanation": "mean, sum, count, max, min"
+    },
+    {
+      "id": "t07",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] merge vs concat — key로 결합은?",
+      "options": [
+        "pd.merge(df1, df2, how='inner', on='key')",
+        "pd.concat(df1, df2, on='key')",
+        "df1.join(df2, key='key')",
+        "pd.combine(df1, df2)"
+      ],
+      "correct": 0,
+      "explanation": "merge=키 결합, concat=행/열 단순 결합"
+    },
+    {
+      "id": "t08",
+      "type": "mcq",
+      "choices": 5,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 이상치 제거 패턴은?",
+      "options": [
+        "df_temp = df[df['Speed'] < 300]",
+        "df.drop('Speed')",
+        "df.remove_outliers()",
+        "df.filter(outlier=False)",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "조건 필터링"
+    },
+    {
+      "id": "t09",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 결측치 평균 대체는?",
+      "options": [
+        "df['col'].fillna(df['col'].mean())",
+        "df['col'].dropna()",
+        "df['col'].replace(mean)",
+        "df.fill(0)"
+      ],
+      "correct": 0,
+      "explanation": "fillna(평균) 또는 mode()[0]"
+    },
+    {
+      "id": "t10",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 컬럼 삭제 axis=1 vs inplace=True?",
+      "options": [
+        "df_del=df.drop(['col'],axis=1) 또는 df.drop(['col'],axis=1,inplace=True)",
+        "df.drop(axis=0)만 가능",
+        "inplace는 행 삭제 전용",
+        "drop은 inplace 불가"
+      ],
+      "correct": 0,
+      "explanation": "새 변수 vs inplace"
+    },
+    {
+      "id": "t11",
+      "type": "mcq",
+      "choices": 5,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 원-핫 인코딩 표준 패턴은?",
+      "options": [
+        "cols=df.select_dtypes('object').columns; pd.get_dummies(data=df, columns=cols)",
+        "pd.one_hot(df)",
+        "LabelEncoder(df)",
+        "df.encode('object')",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "object 컬럼 → get_dummies"
+    },
+    {
+      "id": "t12",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] LabelEncoder import 경로는?",
+      "options": [
+        "from sklearn.preprocessing import LabelEncoder",
+        "from pandas import LabelEncoder",
+        "import label_encoder",
+        "from keras.preprocessing import LabelEncoder"
+      ],
+      "correct": 0,
+      "explanation": "sklearn.preprocessing"
+    },
+    {
+      "id": "t13",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] MinMaxScaler 결과 범위는?",
+      "options": [
+        "0 ~ 1",
+        "-1 ~ 1",
+        "평균 0 표준편차 1",
+        "1 ~ 100"
+      ],
+      "correct": 0,
+      "explanation": "StandardScaler는 평균0·표준편차1"
+    },
+    {
+      "id": "t14",
+      "type": "mcq",
+      "choices": 5,
+      "category": "코드 템플릿",
+      "question": "[템플릿] StandardScaler는?",
+      "options": [
+        "평균 0, 표준편차 1로 변환",
+        "0~1 스케일링",
+        "정수 인코딩",
+        "원-핫 인코딩",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "StandardScaler vs MinMaxScaler"
+    },
+    {
+      "id": "t15",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] jointplot 용도는?",
+      "options": [
+        "두 수치 변수 분포·관계 동시 시각화",
+        "범주 count",
+        "상관 히트맵",
+        "시계열 플롯"
+      ],
+      "correct": 0,
+      "explanation": "jointplot, boxplot, countplot, heatmap 구분"
+    },
+    {
+      "id": "t16",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] train_test_split 기본 비율(자주 출제)은?",
+      "options": [
+        "test_size=0.2, random_state=42",
+        "test_size=0.5, random_state=0",
+        "train_size=0.2",
+        "test_size=0.8"
+      ],
+      "correct": 0,
+      "explanation": "80:20 + random_state=42"
+    },
+    {
+      "id": "t17",
+      "type": "mcq",
+      "choices": 5,
+      "category": "코드 템플릿",
+      "question": "[템플릿] ML 4줄 템플릿 순서는?",
+      "options": [
+        "모델생성 → fit(X_train,y_train) → predict(X_valid)",
+        "predict → fit → 모델생성",
+        "fit → predict → compile",
+        "evaluate → fit → predict",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "sklearn: fit → predict"
+    },
+    {
+      "id": "t18",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 회귀 성능 지표 3종은?",
+      "options": [
+        "MAE, MSE, R2",
+        "accuracy, f1, precision",
+        "confusion_matrix만",
+        "loss, epochs"
+      ],
+      "correct": 0,
+      "explanation": "mean_absolute_error, mean_squared_error, r2_score"
+    },
+    {
+      "id": "t19",
+      "type": "mcq",
+      "choices": 4,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 분류 성능 지표는?",
+      "options": [
+        "accuracy_score, f1_score, confusion_matrix",
+        "MAE, MSE만",
+        "r2_score만",
+        "loss, mse만"
+      ],
+      "correct": 0,
+      "explanation": "분류 vs 회귀 지표 구분"
+    },
+    {
+      "id": "t20",
+      "type": "mcq",
+      "choices": 5,
+      "category": "코드 템플릿",
+      "question": "[템플릿] 다중 분류 DL 출력층은?",
+      "options": [
+        "softmax + categorical_crossentropy",
+        "sigmoid + binary_crossentropy",
+        "relu + mse",
+        "linear + accuracy",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "이진=sigmoid+binary, 다중=softmax+categorical"
+    },
+    {
+      "id": "tip01",
+      "type": "mcq",
+      "choices": 4,
+      "category": "시험 팁",
+      "question": "답안 코드 작성 위치는?",
+      "options": [
+        "'# 여기에 답안코드를 작성하세요' 셀",
+        "아무 코드 셀",
+        "마크다운 셀",
+        "터미널"
+      ],
+      "correct": 0,
+      "explanation": "지정 셀만 채점"
+    },
+    {
+      "id": "tip02",
+      "type": "mcq",
+      "choices": 4,
+      "category": "시험 팁",
+      "question": "Associate 합격 점수·시간·문항 수는?",
+      "options": [
+        "80점/100, 90분, 14문항",
+        "60점, 60분, 15문항",
+        "70점, 120분, 20문항",
+        "100점, 60분, 10문항"
+      ],
+      "correct": 0,
+      "explanation": "공식 가이드북"
+    },
+    {
+      "id": "tip03",
+      "type": "mcq",
+      "choices": 5,
+      "category": "시험 팁",
+      "question": "Associate에 없는 것은?",
+      "options": [
+        "비정형 데이터(이미지/NLP)",
+        "Tabular 분석",
+        "코드 작성",
+        "시각화",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "Tabular만, 객목식 이론 없음"
+    },
+    {
+      "id": "tip04",
+      "type": "mcq",
+      "choices": 4,
+      "category": "시험 팁",
+      "question": "시험 중 참고 가능 사이트는?",
+      "options": [
+        "NumPy, Pandas, Matplotlib, Seaborn, sklearn, TensorFlow 문서",
+        "구글 검색 자유",
+        "ChatGPT 사용",
+        "개인 노트"
+      ],
+      "correct": 0,
+      "explanation": "2025 2회부터 6개 공식 문서 링크"
+    },
+    {
+      "id": "tip05",
+      "type": "mcq",
+      "choices": 4,
+      "category": "시험 팁",
+      "question": "random_state=42를 쓰는 이유는?",
+      "options": [
+        "재현 가능한 동일 결과",
+        "속도 향상",
+        "GPU 활성화",
+        "메모리 절약"
+      ],
+      "correct": 0,
+      "explanation": "분할·모델 시드"
+    },
+    {
+      "id": "tip06",
+      "type": "mcq",
+      "choices": 5,
+      "category": "시험 팁",
+      "question": "Associate 채점 방식은?",
+      "options": [
+        "부분점수 없음, 결과 정확 일치",
+        "부분점수 있음",
+        "코드 스타일도 채점",
+        "주석도 채점",
+        "위 코드는 모두 틀림 / 해당 없음"
+      ],
+      "correct": 0,
+      "explanation": "변수명·파라미터 정확히"
+    },
+    {
+      "id": "tip07",
+      "type": "mcq",
+      "choices": 4,
+      "category": "시험 팁",
+      "question": "시험 데이터 로딩은?",
+      "options": [
+        "문항과 함께 주어짐, 별도 업로드 불필요할 수 있음",
+        "항상 read_csv 필요",
+        "USB로 가져오기",
+        "인터넷에서 다운"
+      ],
+      "correct": 0,
+      "explanation": "가이드북: 데이터 자동 제공"
+    },
+    {
+      "id": "tip08",
+      "type": "mcq",
+      "choices": 4,
+      "category": "시험 팁",
+      "question": "회귀 vs 분류 모델 선택 — RandomForestRegressor는?",
+      "options": [
+        "연속값 예측(회귀)",
+        "범주 예측(분류)",
+        "클러스터링",
+        "차원 축소"
+      ],
+      "correct": 0,
+      "explanation": "Regressor/Classifier 접미사"
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+=== PAGE 1 ===
+AICA LEVEL 2. AIU  ()
+10g
+①oE(Compression)
+(Attention)
+(Backpropagation)
+三己(Decision Tree)
+[: @]
+LLM.
+① Zero-shot Prompting
+ Chain of Thought (CoT)
+ Negative Prompting
+ Few-shot Prompting
+[: @]
+=== PAGE 2 ===
+[: ①]
+合 4IF.
+(Raata)
+[:?]
+=== PAGE 3 ===
+①三±(Persona Prompting)
+(Formatting)
+o|E(Data Injection)
+(StopSequences)
+[③]
+OI 合L|C.
+=== PAGE 4 ===
+① (Fine-tuning)
+②(RAG)
+(RLHF)
+① (Supervised Learning)
+[: @]
+[: ③]
+=== PAGE 5 ===
+9.
+Zero-shot
+One-shot
+Few-shot
+Multi-modal
+[: ③]
+Feshot(Exale
+[: ③]
+合 LICI.
+=== PAGE 6 ===
+①(Parameter)
+二三(Context Window)
+三(Epoch)
+引 引0|(Learning Rate)
+[: ②]
+ oo ?
+[: @]
+=== PAGE 7 ===
+①(Output Formatting)
+②(Tone setting)
+③ (Constraint Setting)
+(Multi-shot)
+[: ①]
+[: @]
+=== PAGE 8 ===
+GAN
+RLHF
+CNN
+RNN
+[: ②]
+:   号  o   9
+① |人l(Instruction)
+③(Constraints)
+[: ]
+=== PAGE 9 ===
+[: ]
+18.A (EnterpriseA)A
+号？
+[: @]
+=== PAGE 10 ===
+三(Bit)
+号(Token)
+三(Node)
+引0|(Layer)
+[: ②]
+营早人o|(Hallucination)
+(Underfitting)
+0E 三2三三(Data Drift)
+[: ②]
+AICAACInstitute

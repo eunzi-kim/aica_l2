@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#1a1f36" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>AICA L2 퀴즈</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="css/app.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <button type="button" id="btn-home" class="btn-icon" aria-label="홈" title="홈">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1V9.5z"/></svg>
+      </button>
+      <span class="header-title">AICA L2</span>
+      <div class="header-spacer"></div>
+    </header>
+
+    <main class="main">
+      <!-- 홈 -->
+      <section id="view-home" class="view active">
+        <div class="hero">
+          <h1 id="exam-title">AICA L2 퀴즈</h1>
+          <p id="exam-desc" class="hero-desc"></p>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-label">전체</span>
+            <span class="stat-value" id="stat-total">0</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">풀었음</span>
+            <span class="stat-value" id="stat-attempted">0</span>
+          </div>
+          <div class="stat-card stat-ok">
+            <span class="stat-label">맞음</span>
+            <span class="stat-value" id="stat-correct">0</span>
+          </div>
+          <div class="stat-card stat-bad">
+            <span class="stat-label">틀림</span>
+            <span class="stat-value" id="stat-wrong">0</span>
+          </div>
+        </div>
+
+        <div class="progress-summary">
+          <div class="progress-row">
+            <span>정답률</span>
+            <strong id="stat-pct">0%</strong>
+          </div>
+          <p class="hint-text">틀린 문제 <strong id="stat-wrong-badge">0</strong>개 · 오답노트로 복습!</p>
+        </div>
+
+        <h2 class="section-title">학습 모드</h2>
+        <div class="mode-list">
+          <button type="button" class="mode-btn" data-mode="all">
+            <span class="mode-name">전체 문항</span>
+            <span class="mode-count" id="count-all">0</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="4">
+            <span class="mode-name">4지선다만</span>
+            <span class="mode-count" id="count-4">0</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="5">
+            <span class="mode-name">5지선다만</span>
+            <span class="mode-count" id="count-5">0</span>
+          </button>
+          <button type="button" class="mode-btn mode-wrong" data-mode="wrong">
+            <span class="mode-name">틀린 문제만 🔁</span>
+            <span class="mode-count" id="count-wrong">0</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="unattempted">
+            <span class="mode-name">아직 안 푼 문제</span>
+            <span class="mode-count" id="count-unattempted">0</span>
+          </button>
+        </div>
+
+        <h2 class="section-title">출처별 학습</h2>
+        <div class="mode-list mode-list-compact">
+          <button type="button" class="mode-btn" data-mode="cat:공식 샘플문항">
+            <span class="mode-name">공식 샘플문항</span>
+            <span class="mode-count" id="count-sample">0</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="cat:연습 문항 뱅크">
+            <span class="mode-name">연습 문항 뱅크</span>
+            <span class="mode-count" id="count-bank">0</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="cat:코드 템플릿">
+            <span class="mode-name">코드 템플릿</span>
+            <span class="mode-count" id="count-template">0</span>
+          </button>
+          <button type="button" class="mode-btn" data-mode="cat:시험 팁">
+            <span class="mode-name">시험 팁</span>
+            <span class="mode-count" id="count-tip">0</span>
+          </button>
+        </div>
+
+        <button type="button" id="btn-clear" class="btn-text">학습 기록 삭제</button>
+      </section>
+
+      <!-- 퀴즈 -->
+      <section id="view-quiz" class="view">
+        <div class="quiz-progress">
+          <div class="progress-track">
+            <div id="progress-bar" class="progress-fill"></div>
+          </div>
+          <span id="progress-text" class="progress-label">1 / 10</span>
+        </div>
+
+        <div class="question-card">
+          <div class="question-meta">
+            <span id="q-category" class="badge badge-cat"></span>
+            <span id="q-choices-badge" class="badge badge-choice"></span>
+          </div>
+          <p id="q-history" class="q-history" hidden></p>
+          <h2 id="q-text" class="question-text"></h2>
+        </div>
+
+        <div id="options" class="options"></div>
+
+        <div id="feedback" class="feedback" hidden></div>
+
+        <div class="quiz-actions">
+          <button type="button" id="btn-check" class="btn-primary" disabled>확인</button>
+          <button type="button" id="btn-next" class="btn-primary" hidden>다음 문제</button>
+        </div>
+      </section>
+
+      <!-- 결과 -->
+      <section id="view-result" class="view">
+        <div class="result-card">
+          <p class="result-label">이번 세션 결과</p>
+          <p id="result-score" class="result-score">0 / 0</p>
+          <p id="result-pct" class="result-pct">0%</p>
+          <p id="result-msg" class="result-msg"></p>
+        </div>
+        <button type="button" id="btn-result-home" class="mode-btn">
+          <span class="mode-name">홈으로</span>
+        </button>
+        <button type="button" id="btn-result-wrong" class="mode-btn mode-wrong">
+          <span class="mode-name">틀린 문제 다시 풀기</span>
+        </button>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
