@@ -11,20 +11,27 @@ st.set_page_config(page_title="AICA L2 AIU Quiz Bot", page_icon="🤖", layout="
 LEARNING_HISTORY_FILE = "learning_history.json"
 
 def load_learning_history():
-    """로컬 학습 기록 불러오기"""
     if os.path.exists(LEARNING_HISTORY_FILE):
         try:
             with open(LEARNING_HISTORY_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
+                data = json.load(f)
+                # 혹시 기존 데이터와 호환성을 위해 기본값 설정
+                return {
+                    "total_score": data.get("total_score", 0),
+                    "wrong_notes": data.get("wrong_notes", []),
+                    "solved_indices": data.get("solved_indices", []), # 추가된 부분
+                    "last_updated": data.get("last_updated", "")
+                }
         except:
-            return {"total_score": 0, "wrong_notes": [], "last_updated": ""}
-    return {"total_score": 0, "wrong_notes": [], "last_updated": ""}
+            pass
+    return {"total_score": 0, "wrong_notes": [], "solved_indices": [], "last_updated": ""}
 
-def save_learning_history(score, wrong_notes):
+def save_learning_history(score, wrong_notes, solved_indices):
     """학습 기록을 로컬에 저장"""
     history = {
         "total_score": score,
         "wrong_notes": wrong_notes,
+        "solved_indices": solved_indices,
         "last_updated": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
     with open(LEARNING_HISTORY_FILE, "w", encoding="utf-8") as f:
@@ -35,6 +42,19 @@ def reset_learning_history():
     if os.path.exists(LEARNING_HISTORY_FILE):
         os.remove(LEARNING_HISTORY_FILE)
     return {"total_score": 0, "wrong_notes": [], "last_updated": ""}
+
+def get_next_question():
+    # 전체 인덱스에서 푼 문제 제외
+    all_indices = set(range(len(QUIZ_DATA)))
+    solved = set(st.session_state.solved_indices)
+    unsolved = list(all_indices - solved)
+    
+    if not unsolved:
+        return None  # 모든 문제를 다 풀었을 때
+        
+    # 안 푼 문제 중 랜덤 선택
+    random_idx = random.choice(unsolved)
+    return random_idx, QUIZ_DATA[random_idx]
 
 # 🎨 모던 & 반응형 UI 스타일
 st.markdown("""
@@ -370,6 +390,8 @@ if "score" not in st.session_state:
     st.session_state.score = LEARNING_HISTORY.get("total_score", 0)  # 로컬 저장된 점수 불러오기
 if "quiz_active" not in st.session_state:
     st.session_state.quiz_active = False
+if "solved_indices" not in st.session_state:
+    st.session_state.solved_indices = LEARNING_HISTORY.get("solved_indices", [])
 
 st.title("🤖 AICA L2 합격 챗봇")
 
@@ -423,60 +445,71 @@ with chat_container:
             st.markdown(f'<div class="chat-bubble-user">{msg["content"]}</div><div class="clear"></div>', unsafe_allow_html=True)
 
 # Quiz System Logic
-active_pool = QUIZ_DATA if st.session_state.current_mode == "all" else st.session_state.wrong_notes
-
-if st.session_state.quiz_active and st.session_state.current_index < len(active_pool):
-    q = active_pool[st.session_state.current_index]
+if st.session_state.quiz_active:
+    # 1. 푼 문제 리스트와 전체 문제 범위를 기반으로 안 푼 문제 리스트 생성
+    solved = st.session_state.solved_indices
+    unsolved = [i for i in range(len(QUIZ_DATA)) if i not in solved]
     
-    # 진행률 표시
-    progress = (st.session_state.current_index + 1) / len(active_pool)
-    progress_percent = int(progress * 100)
-    
-    st.markdown(f"""
-    <div style="margin: 20px 0;">
-        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-            <span style="color: #333; font-weight: 700; font-size: 0.95rem;">진행률</span>
-            <span style="color: #333; font-weight: 700; font-size: 0.95rem;">{st.session_state.current_index + 1} / {len(active_pool)} ({progress_percent}%)</span>
-        </div>
-        <div class="progress-bar">
-            <div class="progress-fill" style="width: {progress_percent}%;"></div>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # 질문 카드
-    st.markdown(f"""
-    <div class="question-card">
-        <span class="category-badge">{q['category']}</span>
-        <div class="question-text">Q{st.session_state.current_index + 1}. {q['question']}</div>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    # 선택지
-    st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
-    choice = st.radio("정답을 선택하세요:", q["options"], key=f"q_{st.session_state.current_index}_{st.session_state.current_mode}", label_visibility="collapsed")
-    
-    # 제출 버튼
-    if st.button("✨ 정답 제출하기", use_container_width=True):
-        st.session_state.messages.append({"role": "user", "content": f"제 답은 '{choice}' 입니다!"})
-        
-        if choice == q["answer"]:
-            st.session_state.score += 1
-            st.session_state.messages.append({"role": "bot", "content": f"🎉 **정답입니다!**\n\n✅ 정답: {q['answer']}\n\n📖 **해설**: {q['explanation']}"})
-            # If solved correctly in wrong note mode, remove it from wrong notes
-            if st.session_state.current_mode == "wrong":
-                st.session_state.wrong_notes.pop(st.session_state.current_index)
-                st.session_state.current_index -= 1
-        else:
-            if q not in st.session_state.wrong_notes:
-                st.session_state.wrong_notes.append(q)
-            st.session_state.messages.append({"role": "bot", "content": f"❌ **아쉽게도 틀렸습니다!**\n\n✅ 정답: **{q['answer']}**\n❌ 선택: {choice}\n\n📖 **해설**: {q['explanation']}"})
-        
-        # 📁 학습 기록 저장
-        save_learning_history(st.session_state.score, st.session_state.wrong_notes)
-        
-        st.session_state.current_index += 1
+    # 2. 모든 문제를 다 풀었는지 확인
+    if not unsolved:
+        st.balloons()
+        st.write("🎉 축하합니다! 모든 문제를 마스터하셨습니다!")
+        st.session_state.quiz_active = False
         st.rerun()
+    else:
+        # 3. 안 푼 문제 중 랜덤 선택
+        q_idx = random.choice(unsolved)
+        q = QUIZ_DATA[q_idx]
+        st.session_state.current_index = q_idx # 현재 문제의 인덱스를 저장
+        
+        # 4. 진행률 계산 (전체 문제 대비 푼 문제)
+        progress = len(solved) / len(QUIZ_DATA)
+        progress_percent = int(progress * 100)
+        
+        # [진행률 표시]
+        st.markdown(f"""
+        <div style="margin: 20px 0;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="color: #333; font-weight: 700; font-size: 0.95rem;">진행률</span>
+                <span style="color: #333; font-weight: 700; font-size: 0.95rem;">{len(solved)} / {len(QUIZ_DATA)} ({progress_percent}%)</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: {progress_percent}%;"></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # 5. 질문 카드
+        st.markdown(f"""
+        <div class="question-card">
+            <span class="category-badge">{q['category']}</span>
+            <div class="question-text">Q. {q['question']}</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # 6. 선택지
+        st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
+        choice = st.radio("정답을 선택하세요:", q["options"], key=f"q_{q_idx}", label_visibility="collapsed")
+        
+        # 7. 제출 버튼
+        if st.button("✨ 정답 제출하기", use_container_width=True):
+            if choice == q["answer"]:
+                st.session_state.score += 1
+                if q_idx not in st.session_state.solved_indices:
+                    st.session_state.solved_indices.append(q_idx)
+                st.session_state.messages.append({"role": "bot", "content": f"🎉 **정답입니다!**\n\n📖 {q['explanation']}"})
+            else:
+                if q not in st.session_state.wrong_notes:
+                    st.session_state.wrong_notes.append(q)
+                st.session_state.messages.append({"role": "bot", "content": f"❌ **아쉽습니다.** 정답: **{q['answer']}**\n\n📖 {q['explanation']}"})
+            
+            # 저장 후 새로고침하여 다음 랜덤 문제 호출
+            save_learning_history(st.session_state.score, st.session_state.wrong_notes, st.session_state.solved_indices)
+            st.rerun()
+
+elif not st.session_state.quiz_active and st.session_state.get("score", 0) > 0:
+    # 퀴즈가 비활성화 상태일 때 보여줄 메시지(필요 시)
+    pass
         
 elif st.session_state.quiz_active:
     st.balloons()
