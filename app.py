@@ -404,7 +404,6 @@ with mode_col1:
     if st.button("🎯 전체 문제 풀기", use_container_width=True):
         st.session_state.current_mode = "all"
         st.session_state.current_index = 0
-        st.session_state.score = 0
         st.session_state.quiz_active = True
         st.session_state.messages.append({"role": "bot", "content": "🎓 전체 문제 모드로 시작합니다!\n\n지금부터 모든 200개 문제를 풀어봅시다! 화이팅! 💪"})
         st.rerun()
@@ -457,12 +456,16 @@ if st.session_state.quiz_active:
         st.session_state.quiz_active = False
         st.rerun()
     else:
-        # 3. 안 푼 문제 중 랜덤 선택
-        q_idx = random.choice(unsolved)
-        q = QUIZ_DATA[q_idx]
-        st.session_state.current_index = q_idx # 현재 문제의 인덱스를 저장
+        # [핵심 수정] 현재 세션에 고정된 문제가 없거나, 이미 푼 문제라면 새로 뽑아서 고정합니다.
+        if "current_question_idx" not in st.session_state or st.session_state.current_question_idx in solved:
+            st.session_state.current_question_idx = random.choice(unsolved)
         
-        # 4. 진행률 계산 (전체 문제 대비 푼 문제)
+        # 고정된 인덱스로 문제를 가져옵니다.
+        q_idx = st.session_state.current_question_idx
+        q = QUIZ_DATA[q_idx]
+        st.session_state.current_index = q_idx 
+        
+        # 4. 진행률 계산
         progress = len(solved) / len(QUIZ_DATA)
         progress_percent = int(progress * 100)
         
@@ -487,28 +490,31 @@ if st.session_state.quiz_active:
         </div>
         """, unsafe_allow_html=True)
         
-        # 6. 선택지
+        # 6. 선택지 (라디오 버튼)
         st.markdown("<div style='margin-top: 25px;'></div>", unsafe_allow_html=True)
-        choice = st.radio("정답을 선택하세요:", q["options"], key=f"q_{q_idx}", label_visibility="collapsed")
+        # index=None을 주어 처음엔 아무것도 선택되지 않은 상태로 만듭니다.
+        choice = st.radio("정답을 선택하세요:", q["options"], key=f"quiz_radio_{q_idx}", index=None, label_visibility="collapsed")
         
         # 7. 제출 버튼
         if st.button("✨ 정답 제출하기", use_container_width=True):
-            if choice == q["answer"]:
-                st.session_state.score += 1
-                if q_idx not in st.session_state.solved_indices:
-                    st.session_state.solved_indices.append(q_idx)
-                st.session_state.messages.append({"role": "bot", "content": f"🎉 **정답입니다!**\n\n📖 {q['explanation']}"})
+            if choice is None:
+                st.warning("⚠️ 정답을 선택한 후 제출해 주세요!")
             else:
-                if q not in st.session_state.wrong_notes:
-                    st.session_state.wrong_notes.append(q)
-                st.session_state.messages.append({"role": "bot", "content": f"❌ **아쉽습니다.** 정답: **{q['answer']}**\n\n📖 {q['explanation']}"})
-            
-            # 저장 후 새로고침하여 다음 랜덤 문제 호출
-            save_learning_history(st.session_state.score, st.session_state.wrong_notes, st.session_state.solved_indices)
-            st.rerun()
+                if choice == q["answer"]:
+                    st.session_state.score += 1
+                    if q_idx not in st.session_state.solved_indices:
+                        st.session_state.solved_indices.append(q_idx)
+                    st.session_state.messages.append({"role": "bot", "content": f"🎉 **정답입니다!**\n\n📖 {q['explanation']}"})
+                else:
+                    if q not in st.session_state.wrong_notes:
+                        st.session_state.wrong_notes.append(q)
+                    st.session_state.messages.append({"role": "bot", "content": f"❌ **아쉽습니다.** 정답: **{q['answer']}**\n\n📖 {q['explanation']}"})
+                
+                # 저장 후 새로고침 (새로고침 되면 위의 3번 로직에 의해 다음 문제가 뽑힙니다)
+                save_learning_history(st.session_state.score, st.session_state.wrong_notes, st.session_state.solved_indices)
+                st.rerun()
 
 elif not st.session_state.quiz_active and st.session_state.get("score", 0) > 0:
-    # 퀴즈가 비활성화 상태일 때 보여줄 메시지(필요 시)
     pass
         
 elif st.session_state.quiz_active:
