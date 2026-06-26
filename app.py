@@ -59,15 +59,17 @@ st.markdown("""
     
     /* ===== 제목 스타일 ===== */
     h1 {
-        background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: #333 !important;
         font-size: 2.4rem !important;
         font-weight: 900 !important;
         text-align: center;
         margin: 15px 0 20px 0 !important;
-        text-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        text-shadow: 0px 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    h3 {
+        color: #333 !important;
+        font-weight: 700 !important;
     }
     
     /* ===== 메트릭 컨테이너 ===== */
@@ -160,12 +162,14 @@ st.markdown("""
         transition: all 0.2s ease !important;
         font-weight: 600 !important;
         line-height: 1.4 !important;
+        color: #333 !important;
     }
     
     .stRadio > label:hover {
         background: rgba(102, 126, 234, 0.15) !important;
         border-color: #667eea !important;
         transform: translateX(5px) !important;
+    }
     }
     
     /* ===== 버튼 스타일 ===== */
@@ -251,6 +255,11 @@ st.markdown("""
         h1 {
             font-size: 1.6rem !important;
             margin: 10px 0 12px 0 !important;
+            color: #333 !important;
+        }
+        
+        h3 {
+            color: #333 !important;
         }
         
         .metric-container {
@@ -283,6 +292,7 @@ st.markdown("""
             font-size: 0.95rem !important;
             padding: 10px 12px !important;
             margin: 5px 0 !important;
+            color: #333 !important;
         }
         
         .chat-bubble-bot, .chat-bubble-user {
