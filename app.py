@@ -308,6 +308,10 @@ st.markdown("""
             font-size: 0.9rem !important;
             padding: 9px 12px !important;
             min-height: 38px !important;
+            /* 아래 3줄을 추가/유지하여 모바일에서도 스타일이 적용되게 합니다 */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            border: none !important;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
         }
         
         .category-badge {
