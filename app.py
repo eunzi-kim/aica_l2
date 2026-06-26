@@ -256,14 +256,23 @@ st.markdown("""
     
     /* ===== 반응형 디자인 (모바일) ===== */
     @media (max-width: 768px) {
-        h1 {
-            font-size: 1.6rem !important;
-            margin: 10px 0 12px 0 !important;
+        h1, h3, p, .metric-label, .metric-value {
             color: #333 !important;
+            -webkit-text-fill-color: #333 !important; /* 모바일 웹킷 브라우저 대응 */
         }
-        
-        h3 {
+
+        /* 2. 라디오 버튼 선택지 스타일 강제 고정 */
+        .stRadio > label {
             color: #333 !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            border: 2px solid rgba(102, 126, 234, 0.3) !important;
+        }
+
+        /* 3. 버튼 색상 재확인 */
+        .stButton > button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            color: white !important;
+            -webkit-text-fill-color: white !important;
         }
         
         .metric-container {
