@@ -72,6 +72,10 @@ st.markdown("""
         font-weight: 700 !important;
     }
     
+    p {
+        color: #333 !important;
+    }
+    
     /* ===== 메트릭 컨테이너 ===== */
     .metric-container {
         display: flex;
