@@ -445,25 +445,34 @@ with chat_container:
 
 # Quiz System Logic
 if st.session_state.quiz_active:
-    # 1. 푼 문제 리스트와 전체 문제 범위를 기반으로 안 푼 문제 리스트 생성
     solved = st.session_state.solved_indices
-    unsolved = [i for i in range(len(QUIZ_DATA)) if i not in solved]
+    # --- [수정] 모드에 따라 문제 목록을 다르게 설정 ---
+    if st.session_state.current_mode == "wrong":
+        # 오답 노트 모드일 때는 wrong_notes에서 가져옴
+        available_questions = st.session_state.wrong_notes
+    else:
+        # 전체 모드일 때는 전체 문제에서 푼 문제 제외
+        solved = st.session_state.solved_indices
+        available_questions = [QUIZ_DATA[i] for i in range(len(QUIZ_DATA)) if i not in solved]
     
-    # 2. 모든 문제를 다 풀었는지 확인
-    if not unsolved:
+    # 2. 문제 풀이 종료 확인
+    if not available_questions:
         st.balloons()
-        st.write("🎉 축하합니다! 모든 문제를 마스터하셨습니다!")
+        st.success("🎉 모든 문제를 마스터하셨습니다!")
         st.session_state.quiz_active = False
         st.rerun()
     else:
-        # [핵심 수정] 현재 세션에 고정된 문제가 없거나, 이미 푼 문제라면 새로 뽑아서 고정합니다.
-        if "current_question_idx" not in st.session_state or st.session_state.current_question_idx in solved:
-            st.session_state.current_question_idx = random.choice(unsolved)
-        
-        # 고정된 인덱스로 문제를 가져옵니다.
-        q_idx = st.session_state.current_question_idx
-        q = QUIZ_DATA[q_idx]
-        st.session_state.current_index = q_idx 
+        # 문제 선택 로직
+        if st.session_state.current_mode == "wrong":
+            q = random.choice(available_questions)
+            q_idx = -1 # 오답 모드에서는 인덱스 관리 방식을 다르게 하거나 제외
+        else:
+            # 기존 전체 문제 인덱스 로직 유지
+            if "current_question_idx" not in st.session_state or st.session_state.current_question_idx in st.session_state.solved_indices:
+                st.session_state.current_question_idx = random.choice([i for i in range(len(QUIZ_DATA)) if i not in st.session_state.solved_indices])
+            q_idx = st.session_state.current_question_idx
+            q = QUIZ_DATA[q_idx]
+            st.session_state.current_index = q_idx 
         
         # 4. 진행률 계산
         progress = len(solved) / len(QUIZ_DATA)
@@ -501,16 +510,20 @@ if st.session_state.quiz_active:
                 st.warning("⚠️ 정답을 선택한 후 제출해 주세요!")
             else:
                 if choice == q["answer"]:
-                    st.session_state.score += 1
-                    if q_idx not in st.session_state.solved_indices:
+                    # 정답 시
+                    if st.session_state.current_mode == "wrong":
+                        st.session_state.wrong_notes.remove(q) # 오답 노트에서 삭제
+                    elif q_idx not in st.session_state.solved_indices:
                         st.session_state.solved_indices.append(q_idx)
+                        
+                    st.session_state.score += 1
                     st.session_state.messages.append({"role": "bot", "content": f"🎉 **정답입니다!**\n\n📖 {q['explanation']}"})
                 else:
+                    # 오답 시 (이미 오답 노트에 있으면 추가 안 함)
                     if q not in st.session_state.wrong_notes:
                         st.session_state.wrong_notes.append(q)
                     st.session_state.messages.append({"role": "bot", "content": f"❌ **아쉽습니다.** 정답: **{q['answer']}**\n\n📖 {q['explanation']}"})
                 
-                # 저장 후 새로고침 (새로고침 되면 위의 3번 로직에 의해 다음 문제가 뽑힙니다)
                 save_learning_history(st.session_state.score, st.session_state.wrong_notes, st.session_state.solved_indices)
                 st.rerun()
 
